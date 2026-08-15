@@ -39,7 +39,7 @@ YUI.add('moodle-availability_xpstore-form', function(Y, NAME) {
      * @method getNode
      * @return {Y.Node} Form node.
      */
-    M.availability_xpstore.form.getNode = function() {
+    M.availability_xpstore.form.getNode = function(json) {
         var str = M.util.get_string;
         var html = '<label><span class="pr-1">' + str('title', 'availability_xpstore') + '</span> ' +
                    '<span class="availability-group">' +
@@ -49,7 +49,11 @@ YUI.add('moodle-availability_xpstore-form', function(Y, NAME) {
         if (rewards && rewards.length > 0) {
             for (var i = 0; i < rewards.length; i++) {
                 var reward = rewards[i];
-                html += '<option value="' + reward.id + '">' + reward.name + '</option>';
+                var selected = '';
+                if (json.productid !== undefined && json.productid == reward.id) {
+                    selected = ' selected="selected"';
+                }
+                html += '<option value="' + reward.id + '"' + selected + '>' + reward.name + '</option>';
             }
         } else {
             html += '<option value="">' + str('missing', 'availability_xpstore') + '</option>';
