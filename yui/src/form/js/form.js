@@ -49,11 +49,7 @@ YUI.add('moodle-availability_xpstore-form', function(Y, NAME) {
         if (rewards && rewards.length > 0) {
             for (var i = 0; i < rewards.length; i++) {
                 var reward = rewards[i];
-                var selected = '';
-                if (json.productid !== undefined && json.productid == reward.id) {
-                    selected = ' selected="selected"';
-                }
-                html += '<option value="' + reward.id + '"' + selected + '>' + reward.name + '</option>';
+                html += '<option value="' + reward.id + '">' + reward.name + '</option>';
             }
         } else {
             html += '<option value="">' + str('missing', 'availability_xpstore') + '</option>';
@@ -61,7 +57,25 @@ YUI.add('moodle-availability_xpstore-form', function(Y, NAME) {
 
         html += '</select></span></label>';
 
-        return Y.Node.create(html);
+        var node = Y.Node.create('<span class="form-inline">' + html + '</span>');
+
+        // Set initial value if specified.
+        if (json.productid !== undefined &&
+                node.one('select[name=productid] > option[value=' + json.productid + ']')) {
+            node.one('select[name=productid]').set('value', '' + json.productid);
+        }
+
+        if (!M.availability_xpstore.form.addedEvents) {
+            M.availability_xpstore.form.addedEvents = true;
+            var root = Y.one('.availability-field');
+            if (root) {
+                root.delegate('change', function() {
+                    M.core_availability.form.update();
+                }, '.availability_xpstore select');
+            }
+        }
+
+        return node;
     };
 
     /**
