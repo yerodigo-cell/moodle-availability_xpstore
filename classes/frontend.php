@@ -16,13 +16,11 @@
 
 namespace availability_xpstore;
 
-defined('MOODLE_INTERNAL') || die();
-
 /**
  * Frontend classes for availability_xpstore.
  *
  * @package    availability_xpstore
- * @copyright  2026 Yeison Díaz
+ * @copyright  2026 EduPlugins Studio
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class frontend extends \core_availability\frontend {
@@ -48,7 +46,7 @@ class frontend extends \core_availability\frontend {
      */
     protected function get_javascript_init_params($course, \cm_info $cm = null, \section_info $section = null) {
         $rewards = [];
-        
+
         // Fetch products configured in this course.
         $configraw = get_config('local_xpstore', 'catalog_course_' . $course->id) ?: '';
         $items = array_filter(explode(',', $configraw));
@@ -62,7 +60,7 @@ class frontend extends \core_availability\frontend {
             if (isset($parts[0])) {
                 $productid = $parts[0];
                 $customname = isset($parts[2]) ? trim($parts[2]) : '';
-                
+
                 // If there's no custom name, we could try to resolve the activity name.
                 if (empty($customname)) {
                     $tipochar = substr($productid, 0, 1);
@@ -77,7 +75,7 @@ class frontend extends \core_availability\frontend {
                         $customname = $productid;
                     }
                 }
-                
+
                 $rewards[] = (object)[
                     'id' => $productid,
                     'name' => $customname,

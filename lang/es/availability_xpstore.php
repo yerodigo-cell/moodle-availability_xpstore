@@ -18,16 +18,16 @@
  * Spanish strings for availability_xpstore.
  *
  * @package    availability_xpstore
- * @copyright  2026 Yeison Díaz
+ * @copyright  2026 EduPlugins Studio
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 defined('MOODLE_INTERNAL') || die();
 
-$string['pluginname'] = 'Restricción por Tienda XP';
-$string['title'] = 'Tienda XP';
 $string['description'] = 'Permite exigir que el estudiante compre un ítem específico en la Tienda XP.';
-$string['requires_reward'] = 'Debes comprar <strong>{$a}</strong> en la Tienda XP.';
-$string['missing'] = '(Recompensa no encontrada)';
 $string['label_reward'] = 'Recompensa requerida';
+$string['missing'] = '(Recompensa no encontrada)';
+$string['pluginname'] = 'Restricción por Tienda XP';
 $string['privacy:metadata'] = 'El plugin de Restricción por Tienda XP no almacena ningún dato personal. Solamente verifica las compras registradas en el plugin local_xpstore.';
+$string['requires_reward'] = 'Debes comprar <strong>{$a}</strong> en la Tienda XP.';
+$string['title'] = 'Tienda XP';

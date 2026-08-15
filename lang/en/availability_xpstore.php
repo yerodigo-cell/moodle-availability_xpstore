@@ -18,16 +18,16 @@
  * English strings for availability_xpstore.
  *
  * @package    availability_xpstore
- * @copyright  2026 Yeison Díaz
+ * @copyright  2026 EduPlugins Studio
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 defined('MOODLE_INTERNAL') || die();
 
-$string['pluginname'] = 'Restriction by XP Store';
-$string['title'] = 'XP Store';
 $string['description'] = 'Require students to purchase a specific item from the XP Store.';
-$string['requires_reward'] = 'You must purchase <strong>{$a}</strong> in the XP Store.';
-$string['missing'] = '(Missing reward)';
 $string['label_reward'] = 'Reward to purchase';
+$string['missing'] = '(Missing reward)';
+$string['pluginname'] = 'Restriction by XP Store';
 $string['privacy:metadata'] = 'The Restriction by XP Store plugin does not store any personal data. It only checks the purchases made in the local_xpstore plugin.';
+$string['requires_reward'] = 'You must purchase <strong>{$a}</strong> in the XP Store.';
+$string['title'] = 'XP Store';

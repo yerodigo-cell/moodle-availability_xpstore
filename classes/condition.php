@@ -16,13 +16,11 @@
 
 namespace availability_xpstore;
 
-defined('MOODLE_INTERNAL') || die();
-
 /**
  * Condition (core logic).
  *
  * @package    availability_xpstore
- * @copyright  2026 Yeison Díaz
+ * @copyright  2026 EduPlugins Studio
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class condition extends \core_availability\condition {
@@ -54,8 +52,9 @@ class condition extends \core_availability\condition {
     /**
      * Determines whether this condition is met for the given user.
      *
-     * @param \core_availability\info $info Information about the item.
      * @param bool $not True if the condition is inverted.
+     * @param \core_availability\info $info Information about the item.
+     * @param bool $notnecessary True if this condition is not necessary.
      * @param int $userid User ID.
      * @return bool True if available.
      */
@@ -94,7 +93,7 @@ class condition extends \core_availability\condition {
      */
     public function get_description($full, $not, \core_availability\info $info) {
         $rewardname = $this->get_reward_name($info->get_course()->id);
-        
+
         if ($not) {
             return get_string('requires_not_reward', 'availability_xpstore', $rewardname);
         } else {
