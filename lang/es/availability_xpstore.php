@@ -29,4 +29,5 @@ $string['title'] = 'Tienda XP';
 $string['description'] = 'Permite exigir que el estudiante compre un ítem específico en la Tienda XP.';
 $string['requires_reward'] = 'Debes comprar <strong>{$a}</strong> en la Tienda XP.';
 $string['missing'] = '(Recompensa no encontrada)';
-$string['label_reward'] = 'Recompensa a comprar';
+$string['label_reward'] = 'Recompensa requerida';
+$string['privacy:metadata'] = 'El plugin de Restricción por Tienda XP no almacena ningún dato personal. Solamente verifica las compras registradas en el plugin local_xpstore.';

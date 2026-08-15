@@ -14,20 +14,27 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
-/**
- * English strings for availability_xpstore.
- *
- * @package    availability_xpstore
- * @copyright  2026 Yeison Díaz
- * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
- */
+namespace availability_xpstore\privacy;
 
 defined('MOODLE_INTERNAL') || die();
 
-$string['pluginname'] = 'Restriction by XP Store';
-$string['title'] = 'XP Store';
-$string['description'] = 'Require students to purchase a specific item from the XP Store.';
-$string['requires_reward'] = 'You must purchase <strong>{$a}</strong> in the XP Store.';
-$string['missing'] = '(Missing reward)';
-$string['label_reward'] = 'Reward to purchase';
-$string['privacy:metadata'] = 'The Restriction by XP Store plugin does not store any personal data. It only checks the purchases made in the local_xpstore plugin.';
+use core_privacy\local\metadata\null_provider;
+
+/**
+ * Privacy Subsystem for availability_xpstore.
+ *
+ * @package    availability_xpstore
+ * @copyright  2026 EduPlugins Studio
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
+class provider implements null_provider {
+    /**
+     * Get the language string identifier with the component's language
+     * file to explain why this plugin stores no data.
+     *
+     * @return  string
+     */
+    public static function get_reason(): string {
+        return 'privacy:metadata';
+    }
+}
