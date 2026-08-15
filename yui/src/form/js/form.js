@@ -5,6 +5,7 @@
  */
 YUI.add('moodle-availability_xpstore-form', function(Y, NAME) {
     /* eslint-disable camelcase */
+    /* global M */
 
     /**
      * Provides the form interface for the availability_xpstore plugin.
