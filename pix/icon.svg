@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <defs>
+    <!-- Striking gaming gradient background -->
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0164cc" />
+      <stop offset="100%" stop-color="#02bfaa" />
+    </linearGradient>
+    
+    <!-- Bright golden gradient for the star -->
+    <linearGradient id="starGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#FEF08A" />
+      <stop offset="100%" stop-color="#EAB308" />
+    </linearGradient>
+    
+    <!-- Drop shadow for the star and text -->
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="3" stdDeviation="3" flood-color="#000000" flood-opacity="0.3"/>
+    </filter>
+  </defs>
+
+  <!-- Rounded Background -->
+  <rect x="2" y="2" width="96" height="96" rx="22" fill="url(#bg)" />
+
+  <!-- Giant Golden Star -->
+  <path d="M 50 10 
+           L 61 32 
+           L 85 35 
+           L 67 52 
+           L 72 75 
+           L 50 63 
+           L 28 75 
+           L 33 52 
+           L 15 35 
+           L 39 32 Z" 
+        fill="url(#starGrad)" stroke="#B45309" stroke-width="2" stroke-linejoin="round" filter="url(#shadow)" />
+
+  <!-- XP Text inside Star -->
+  <text x="50" y="55" font-family="'Arial Black', 'Segoe UI', Roboto, Helvetica, sans-serif" font-size="22" font-weight="900" fill="#713F12" text-anchor="middle">XP</text>
+
+  <!-- STORE Text below the star -->
+  <text x="50" y="91" font-family="'Arial Black', 'Segoe UI', Roboto, Helvetica, sans-serif" font-size="15" font-weight="900" fill="#FFFFFF" text-anchor="middle" filter="url(#shadow)" letter-spacing="3">STORE</text>
+</svg>
