@@ -25,7 +25,7 @@
 defined('MOODLE_INTERNAL') || die();
 
 $plugin->component = 'availability_xpstore';
-$plugin->version   = 2026081600;
+$plugin->version   = 2026081601;
 $plugin->requires  = 2024100700; // Moodle 4.5.
 $plugin->maturity  = MATURITY_STABLE;
 $plugin->release   = 'v1.0.0';
