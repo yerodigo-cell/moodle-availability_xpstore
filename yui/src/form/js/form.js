@@ -3,8 +3,7 @@
  *
  * @module moodle-availability_xpstore-form
  */
-YUI.add('moodle-availability_xpstore-form', function(Y, NAME) {
-    /* eslint-disable camelcase */
+/* eslint-disable camelcase */
 
 
     /**
@@ -105,7 +104,3 @@ YUI.add('moodle-availability_xpstore-form', function(Y, NAME) {
             errors.push('availability_xpstore:missing');
         }
     };
-
-}, '@VERSION@', {
-    requires: ['base', 'node', 'event', 'moodle-core_availability-form']
-});

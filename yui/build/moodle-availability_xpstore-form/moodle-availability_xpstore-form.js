@@ -5,8 +5,7 @@ YUI.add('moodle-availability_xpstore-form', function (Y, NAME) {
  *
  * @module moodle-availability_xpstore-form
  */
-YUI.add('moodle-availability_xpstore-form', function(Y, NAME) {
-    /* eslint-disable camelcase */
+/* eslint-disable camelcase */
 
 
     /**
@@ -108,9 +107,5 @@ YUI.add('moodle-availability_xpstore-form', function(Y, NAME) {
         }
     };
 
-}, '@VERSION@', {
-    requires: ['base', 'node', 'event', 'moodle-core_availability-form']
-});
 
-
-}, '@VERSION@');
+}, '@VERSION@', {"requires": ["base", "node", "event", "moodle-core_availability-form"]});

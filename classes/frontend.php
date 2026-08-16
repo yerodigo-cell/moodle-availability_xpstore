@@ -33,6 +33,7 @@ class frontend extends \core_availability\frontend {
         return [
             'title',
             'label_reward',
+            'missing',
         ];
     }
 
