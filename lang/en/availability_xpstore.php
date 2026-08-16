@@ -27,7 +27,7 @@ defined('MOODLE_INTERNAL') || die();
 $string['description'] = 'Require students to purchase a specific item from the XP Store.';
 $string['label_reward'] = 'Reward to purchase';
 $string['missing'] = '(Missing reward)';
-$string['pluginname'] = 'Restriction by XP Store';
+$string['pluginname'] = 'XP Store Availability';
 $string['privacy:metadata'] = 'The Restriction by XP Store plugin does not store any personal data. It only checks the purchases made in the local_xpstore plugin.';
 $string['requires_reward'] = 'You must purchase <strong>{$a}</strong> in the XP Store.';
 $string['title'] = 'XP Store';

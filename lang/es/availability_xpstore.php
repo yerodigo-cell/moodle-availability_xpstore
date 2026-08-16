@@ -27,7 +27,7 @@ defined('MOODLE_INTERNAL') || die();
 $string['description'] = 'Permite exigir que el estudiante compre un ítem específico en la Tienda XP.';
 $string['label_reward'] = 'Recompensa requerida';
 $string['missing'] = '(Recompensa no encontrada)';
-$string['pluginname'] = 'Restricción por Tienda XP';
+$string['pluginname'] = 'Disponibilidad por Tienda XP';
 $string['privacy:metadata'] = 'El plugin de Restricción por Tienda XP no almacena ningún dato personal. Solamente verifica las compras registradas en el plugin local_xpstore.';
 $string['requires_reward'] = 'Debes comprar <strong>{$a}</strong> en la Tienda XP.';
 $string['title'] = 'Tienda XP';
