@@ -1,4 +1,4 @@
-# Moodle Availability Restriction: XP Store
+# XP Store Availability
 
 This is a Moodle availability condition plugin (`availability_xpstore`) that works in tandem with the `local_xpstore` plugin. 
 
