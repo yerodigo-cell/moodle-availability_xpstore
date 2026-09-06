@@ -28,7 +28,7 @@ $plugin->component = 'availability_xpstore';
 $plugin->version   = 2026090600;
 $plugin->requires  = 2024100700;
 $plugin->maturity  = MATURITY_STABLE;
-$plugin->release   = 'v1.0';
+$plugin->release   = 'v1.0.1';
 
 $plugin->dependencies = [
     'local_xpstore' => ANY_VERSION, // Requires the main XP Store plugin.
