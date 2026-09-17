@@ -1,4 +1,4 @@
-# XP Store Availability
+# XP Store Availability - By E.P. Studio
 
 This is a Moodle availability condition plugin (`availability_xpstore`) that works in tandem with the `local_xpstore` plugin. 
 It allows teachers to restrict access to course activities and resources based on whether a student has "purchased" a specific item in the XP Store.
