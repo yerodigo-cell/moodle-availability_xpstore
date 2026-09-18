@@ -102,6 +102,90 @@ class condition extends \core_availability\condition {
     }
 
     /**
+     * Updates this condition after restore, returning true if anything changed.
+     *
+     * @param string $restoreid Restore ID
+     * @param int $courseid Course ID
+     * @param \base_logger $logger Logger
+     * @param string $name Name of item being restored
+     * @return bool True if updated
+     */
+    public function update_after_restore($restoreid, $courseid, \base_logger $logger, $name): bool {
+        global $DB;
+        $res = false;
+
+        if (!$this->productid) {
+            return $res;
+        }
+
+        $type = substr($this->productid, 0, 1);
+        $itemid = (int)substr($this->productid, 1);
+
+        if ($itemid <= 0) {
+            return $res;
+        }
+
+        // Determine if it's a grade item or course module.
+        $mappingname = ($type === 'M') ? 'grade_item' : 'course_module';
+        $rec = \restore_dbops::get_backup_ids_record($restoreid, $mappingname, $itemid);
+
+        if ($rec && $rec->newitemid) {
+            $newproductid = $type . $rec->newitemid;
+            if ($this->productid !== $newproductid) {
+                $this->productid = $newproductid;
+                $res = true;
+            }
+        } else {
+            // Check if the item already exists in the current course (e.g., duplicated in the same course).
+            if ($mappingname === 'course_module') {
+                if ($DB->record_exists('course_modules', ['id' => $itemid, 'course' => $courseid])) {
+                    return $res;
+                }
+            } else {
+                if ($DB->record_exists('grade_items', ['id' => $itemid, 'courseid' => $courseid])) {
+                    return $res;
+                }
+            }
+
+            // Could not map it.
+            $logger->process('Restored item (' . $name .
+                    ') has xpstore condition on ' . $mappingname . ' that was not restored',
+                    \backup::LOG_WARNING);
+        }
+
+        return $res;
+    }
+
+    /**
+     * Updates the dependency ID when a module or grade item is modified/deleted.
+     *
+     * @param string $table Table name
+     * @param int $oldid Old ID
+     * @param int $newid New ID
+     * @return bool True if changed
+     */
+    public function update_dependency_id($table, $oldid, $newid) {
+        if (!$this->productid) {
+            return false;
+        }
+
+        $type = substr($this->productid, 0, 1);
+        $itemid = (int)substr($this->productid, 1);
+
+        if ($table === 'course_modules' && $type !== 'M' && $itemid === (int)$oldid) {
+            $this->productid = $type . $newid;
+            return true;
+        }
+
+        if ($table === 'grade_items' && $type === 'M' && $itemid === (int)$oldid) {
+            $this->productid = $type . $newid;
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
      * Gets the custom string describing this condition for the current standalone setting.
      *
      * @return string
