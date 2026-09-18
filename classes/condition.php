@@ -148,9 +148,10 @@ class condition extends \core_availability\condition {
             }
 
             // Could not map it.
-            $logger->process('Restored item (' . $name .
-                    ') has xpstore condition on ' . $mappingname . ' that was not restored',
-                    \backup::LOG_WARNING);
+            $logger->process(
+                'Restored item (' . $name . ') has xpstore condition on ' . $mappingname . ' that was not restored',
+                \backup::LOG_WARNING
+            );
         }
 
         return $res;
