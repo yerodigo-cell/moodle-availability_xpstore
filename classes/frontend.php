@@ -24,7 +24,6 @@ namespace availability_xpstore;
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class frontend extends \core_availability\frontend {
-
     /**
      * Decides whether this plugin should be available in a given course.
      * Avoids loading JS init params when the course has no configured store catalog.
