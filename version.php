@@ -25,10 +25,10 @@
 defined('MOODLE_INTERNAL') || die();
 
 $plugin->component = 'availability_xpstore';
-$plugin->version   = 2026091700;
+$plugin->version   = 2026110800;
 $plugin->requires  = 2024100700;
 $plugin->maturity  = MATURITY_STABLE;
-$plugin->release   = 'v1.0.2';
+$plugin->release   = 'v1.0.3';
 
 $plugin->dependencies = [
     'local_xpstore' => ANY_VERSION, // Requires the main XP Store plugin.

@@ -24,8 +24,12 @@ namespace availability_xpstore;
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class condition extends \core_availability\condition {
+
     /** @var string The target product identifier, e.g. "U123" or "G456" */
     protected $productid;
+
+    /** @var array Request-scoped cache of purchased product keys indexed by userid. */
+    protected static $userpurchasescache = [];
 
     /**
      * Constructor.
@@ -51,6 +55,8 @@ class condition extends \core_availability\condition {
 
     /**
      * Determines whether this condition is met for the given user.
+     * Preloads all purchases for the user once per request so courses with multiple
+     * restricted activities execute only 1 SQL query instead of N queries on every page load.
      *
      * @param bool $not True if the condition is inverted.
      * @param \core_availability\info $info Information about the item.
@@ -65,22 +71,26 @@ class condition extends \core_availability\condition {
             return false;
         }
 
-        // The product id is composed of type (1 char) and cmid/itemid.
-        $type = substr($this->productid, 0, 1);
-        $itemid = (int)substr($this->productid, 1);
-
-        // Check if the user has purchased this exact item.
-        $haspurchased = $DB->record_exists('local_xpstore_gastos', [
-            'userid' => $userid,
-            'itemtype' => $type,
-            'itemid' => $itemid,
-        ]);
-
-        if ($not) {
-            return !$haspurchased;
-        } else {
-            return $haspurchased;
+        $userid = (int)$userid;
+        if ($userid <= 0) {
+            return false;
         }
+
+        // Preload all purchases for this user in 1 query using pure PHP concatenation (100% DB-agnostic).
+        if (!array_key_exists($userid, self::$userpurchasescache) || (defined('PHPUNIT_TEST') && PHPUNIT_TEST)) {
+            self::$userpurchasescache[$userid] = [];
+            $records = $DB->get_records('local_xpstore_gastos', ['userid' => $userid], '', 'id, itemtype, itemid');
+            foreach ($records as $rec) {
+                $k = strtoupper((string)$rec->itemtype) . (int)$rec->itemid;
+                self::$userpurchasescache[$userid][$k] = true;
+            }
+        }
+
+        $type = strtoupper(substr($this->productid, 0, 1));
+        $itemid = (int)substr($this->productid, 1);
+        $haspurchased = !empty(self::$userpurchasescache[$userid][$type . $itemid]);
+
+        return $not ? !$haspurchased : $haspurchased;
     }
 
     /**
@@ -112,8 +122,8 @@ class condition extends \core_availability\condition {
      */
     public function update_after_restore($restoreid, $courseid, \base_logger $logger, $name): bool {
         global $DB;
-        $res = false;
 
+        $res = false;
         if (!$this->productid) {
             return $res;
         }
@@ -127,8 +137,8 @@ class condition extends \core_availability\condition {
 
         // Determine if it's a grade item or course module.
         $mappingname = ($type === 'M') ? 'grade_item' : 'course_module';
-        $rec = \restore_dbops::get_backup_ids_record($restoreid, $mappingname, $itemid);
 
+        $rec = \restore_dbops::get_backup_ids_record($restoreid, $mappingname, $itemid);
         if ($rec && $rec->newitemid) {
             $newproductid = $type . $rec->newitemid;
             if ($this->productid !== $newproductid) {
@@ -146,7 +156,6 @@ class condition extends \core_availability\condition {
                     return $res;
                 }
             }
-
             // Could not map it.
             $logger->process(
                 'Restored item (' . $name . ') has xpstore condition on ' . $mappingname . ' that was not restored',
@@ -169,7 +178,6 @@ class condition extends \core_availability\condition {
         if (!$this->productid) {
             return false;
         }
-
         $type = substr($this->productid, 0, 1);
         $itemid = (int)substr($this->productid, 1);
 
@@ -177,12 +185,10 @@ class condition extends \core_availability\condition {
             $this->productid = $type . $newid;
             return true;
         }
-
         if ($table === 'grade_items' && $type === 'M' && $itemid === (int)$oldid) {
             $this->productid = $type . $newid;
             return true;
         }
-
         return false;
     }
 
@@ -209,10 +215,11 @@ class condition extends \core_availability\condition {
             $parts = explode(':', trim($item));
             if (isset($parts[0]) && $parts[0] === $this->productid) {
                 if (!empty($parts[2])) {
-                    return $parts[2];
+                    return str_replace(['[[XPCOLON]]', '[[XPCOMMA]]'], [':', ','], trim($parts[2]));
                 }
             }
         }
+
         return get_string('missing', 'availability_xpstore');
     }
 }
